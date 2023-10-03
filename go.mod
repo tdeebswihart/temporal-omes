@@ -57,6 +57,6 @@ require (
 // This is dumb, but necesary because Go (for some commands) can't figure out the transitive
 // local-replace inside of the features module itself, so we have to help it.
 replace (
-	github.com/temporalio/features/features => github.com/temporalio/features/features v0.0.0-20230825203822-22c291e343bd
-	github.com/temporalio/features/harness/go => github.com/temporalio/features/harness/go v0.0.0-20230825203822-22c291e343bd
+	github.com/temporalio/features/features => github.com/tdeebswihart/temporal-features/features v0.0.0-20231003204831-843d9c0f5e43
+	github.com/temporalio/features/harness/go => github.com/tdeebswihart/temporal-features/harness/go v0.0.0-20231003204831-843d9c0f5e43
 )

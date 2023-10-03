@@ -21,6 +21,8 @@ import (
 	"go.temporal.io/sdk/testsuite"
 )
 
+const errInterrupt = "signal: interrupt"
+
 func runWorkerCmd() *cobra.Command {
 	var r workerRunner
 	cmd := &cobra.Command{
@@ -189,7 +191,7 @@ func (r *workerRunner) run(ctx context.Context) error {
 		return fmt.Errorf("worker failed: %w", err)
 	case <-ctx.Done():
 		// Context cancelled, interrupt worker
-		r.logger.Infof("Sending interrupt to worker, PID: %v", cmd.Process.Pid)
+		r.logger.Infof("Context cancelled, sending interrupt to worker, PID: %v", cmd.Process.Pid)
 		if err := sendInterrupt(cmd.Process); err != nil {
 			return fmt.Errorf("failed to send interrupt to worker: %w", err)
 		}
@@ -202,7 +204,7 @@ func (r *workerRunner) run(ctx context.Context) error {
 				}
 			}
 		}
-		if err != nil {
+		if err != nil && err.Error() != errInterrupt {
 			r.logger.Warnf("Worker failed after interrupt: %v", err)
 		}
 		return nil
